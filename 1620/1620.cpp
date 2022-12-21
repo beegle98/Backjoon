@@ -11,13 +11,16 @@
 using namespace std;
 
 typedef long long ll;
-
+string x,ans[100001];
 int main(){
+    ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+    
     int n,m;
-    string x,ans[100001];
     map<string,string> map_name;
     map<string,string> map_index;
-    scanf("%d %d",&n,&m);
+    cin >> n >> m;
     for(int i=1;i<=n;i++){
         cin >> x;
         //cout << to_string(i) <<"\n";
