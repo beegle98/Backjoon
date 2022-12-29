@@ -12,7 +12,7 @@ using namespace std;
 
 typedef long long ll;
 
-priority_queue<int,vector<int>,greater<int>> pq;
+
 int main(){
     ios::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -20,32 +20,20 @@ int main(){
 
     ll sum=0;
     int T,n,x;
+    int dp[501][501];
+
     cin >> T;
     for(int k=0;k<T;k++){
         cin >> n;
-        while(!pq.empty()) pq.pop();
         for(int i=0;i<n;i++){
-            cin >> x;
-            pq.push(x);
+            int x;
+            cin >> dp[i][i];
         }
-        sum=0;
-        for(int i=0;i<n-1;i++){
-            //cout << pq.top() << ' ';
-            //pq.pop();
-            int a,b;
-            a=pq.top();
-            pq.pop();
-            b=pq.top();
-            pq.pop();
-            //cout << a << ',' << b << ' ';
-            b+=a;
-            sum+=b;
+        for(int i=0;i<n;i++){
             
-            pq.push(b);
         }
         cout << sum << '\n';
     }
-    
-
     return 0;
+    https://gist.github.com/injae-kim/2b419af2a077ae6b24007a8458850df7
 }
