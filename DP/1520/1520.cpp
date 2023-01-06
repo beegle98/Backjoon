@@ -15,28 +15,35 @@ typedef long long ll;
 #define INF 1987654321
 int n,m;
 int s[555][555];
-bool visited[555][555];
+int visited[555][555];
 ll sum=0;
 
 int dfs(int x,int y){
-    if(visited[x][y] || (x==n && y==m)){
-        //cout << x << " " << y << '\n';
-        sum++;
-        return 1;
+    if(visited[x][y] >=1 || (x==n && y==m)){
+        sum+=visited[x][y];
+        return visited[x][y];
     }
+    else if(visited[x][y]==0) return 0;
     else{
+        int ret=0;
         if(s[x-1][y]<s[x][y] && x-1 >= 1){
-            if(dfs(x-1,y)) visited[x][y]=1;
+            ret += dfs(x-1,y);
+            //cout << "in x-1: " << x << y << ':' <<ret << '\n';
         }
         if(s[x+1][y]<s[x][y] && x+1 <= n){
-            if(dfs(x+1,y)) visited[x][y]=1;
+            ret += dfs(x+1,y);
+            //cout << "in x+1: " << x << y << ':' <<ret << '\n';
         }
         if(s[x][y-1]<s[x][y] && y-1 >= 1){
-            if(dfs(x,y-1)) visited[x][y]=1;
+            ret += dfs(x,y-1);
+            //cout << "in y-1: " << x << y << ':' <<ret << '\n';
         }
         if(s[x][y+1]<s[x][y] && y+1 <= m){
-            if(dfs(x,y+1)) visited[x][y]=1;
+            ret += dfs(x,y+1);
+            //cout << "in y+1: " << x << y << ':' <<ret << '\n';
         }
+        visited[x][y]=ret;
+       // cout << x << ":" << y << " " << ret << '\n';
         
     }
     return visited[x][y];
@@ -51,8 +58,10 @@ int main(){
     for(int i=1;i<=n;i++){
         for(int j=1;j<=m;j++){
             cin >> s[i][j];
+            visited[i][j]=-1;
         }
     }
+    visited[n][m]=1;
     dfs(1,1);
     cout << sum;
     return 0;
