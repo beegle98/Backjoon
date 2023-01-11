@@ -17,10 +17,19 @@ int n,m;
 int s[555][555];
 bool visited[555][555];
 ll sum=0;
-
+void print(){
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            cout << visited[i][j] << " ";
+        }
+        cout << '\n';
+    }
+}
 int dfs(int x,int y){
-    if(visited[x][y] || (x==n && y==m)){
-        //cout << x << " " << y << '\n';
+    cout << x << " : " << y <<'\n';
+    if(visited[x][y]>=1 || (x==n && y==m)){
+        cout << x << " " << y << '\n';
+        print();
         sum++;
         return 1;
     }
