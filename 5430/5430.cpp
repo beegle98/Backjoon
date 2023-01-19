@@ -28,12 +28,15 @@ int main(){
     for(int k=0;k<t;k++){
         f=1;
         error=0;
-        cin >> p >> n;
+        cin >> p; //string
+        cin >> n; //원소 개수
+        cin >> c; // '['
         for(int i=0;i<n;i++){
-            cin >> c >> x;
+            cin >> x;
             dq.push_back(x);
+            if(i<n-1) cin >> c; // ','
         }
-        cin >> c;
+        cin >> c; // ']'
         for(int i=0;i<p.size();i++){
             if(p[i]=='R'){
                 f=!f;
@@ -63,9 +66,8 @@ int main(){
                     dq.pop_back();
                 }
                 if(i<m-1) cout << ',';
-                else cout << ']';
             }
-            cout << '\n';
+            cout << ']' <<'\n';
         }
 
 
