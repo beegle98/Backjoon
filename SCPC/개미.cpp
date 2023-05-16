@@ -14,9 +14,8 @@ using namespace std;
 typedef long long ll;
 
 ll sum=0;
-ll p[300001],v[300001];
-multiset<int, int> m;
-
+ll p[300001], v[300001];
+vector<pair<int,int>> s;
 
 int main(){
     ios::sync_with_stdio(false);
@@ -28,36 +27,29 @@ int main(){
 	cin >> T;
 	for(test_case = 0; test_case  < T; test_case++)
 	{
-        ll c;
-		sum = 0;
+       
 		/////////////////////////////////////////////////////////////////////////////////////////////
-		int n;
+		
+        int n;
         cin >> n;
-
-        //큐
-        
+        s.clear();
         for(int i=0;i<n;i++){
             cin >> p[i];
         }
         for(int i=0;i<n;i++){
             cin >> v[i];
-            m.insert(v[i]);
-            
+            s.push_back({v[i],p[i]});
         }
+        sort(s.begin(),s.end());
+        sum=0;
+        for(int i=0;i<n;i++){
+            sum+=abs(s[i].second-p[i]);
+        }
+
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		
-        for(int i=0;i<n;i++){
-            auto f=m.lower_bound(v[i]);
-            cout << *f << " : " << f-m. << "\n";
-            c= *f-p[i];
-            sum+= c >= 0 ? c : -c;
-            m.erase(f);
-
-        }
-        cout << "Case #" << test_case+1 << "\n" << sum << "\n";
-
-        ///multiset 
         
+        cout << "Case #" << test_case+1 << "\n" << sum << "\n";
 
 	}
 
