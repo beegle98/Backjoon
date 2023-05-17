@@ -8,17 +8,49 @@ int n,w;
 vector<pair<int,int>> pathA,pathB;
 
 int dp[1001][1001];
-void minpath(int x,int y){
-
-}
-void solve(){
-    minpath(0,0);// 최소 길이 구하는 함수
-    //path출력 함수 추가
-}
+int p[1001][1001];
 
 int dist(pair<int,int> a, pair<int,int> b){
     return abs(a.first-b.first) + abs(a.second-b.second);
 }
+void printPath(int a,int b){
+    if(a==w||b==w) return;
+
+    cout << p[a][b] << '\n';
+
+    int x=max(a,b)+1;
+
+    if(p[a][b]==1) printPath(x,b);
+    else printPath(a,x);
+
+}
+int minpath(int a,int b){
+    
+    if(a==w||b==w){
+        return 0;
+    }
+    if(dp[a][b]!=-1) return dp[a][b];
+    int x;
+    x=max(a,b)+1;
+    //cout << a << "," << b << ": ";
+    //cout << dist(pathA[a],pathA[x])<< ','<< dist(pathB[b],pathB[x]) << '\n';
+    int pA=minpath(x,b)+dist(pathA[a],pathA[x]);
+    int pB=minpath(a,x)+dist(pathB[b],pathB[x]);
+    if( pA<pB){
+        p[a][b]=1;
+        return dp[a][b]=pA;
+    }
+    else{
+        p[a][b]=2;
+        return dp[a][b]=pB;
+    }
+}
+void solve(){
+    cout << minpath(0,0) << '\n';// 최소 길이 구하는 함수
+    printPath(0,0);
+}
+
+
 int main(){
     ios::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -33,7 +65,7 @@ int main(){
         pathA.push_back({x,y});
         pathB.push_back({x,y});
     }
-
+    memset(dp,-1,sizeof(dp));
     solve();
 
     return 0;
