@@ -4,6 +4,7 @@ using namespace std;
 
 typedef long long ll;
 
+const ll MOD=1e9+7;
 ll dp[500001],v[500001],s[500001];
 int n,k;
 
