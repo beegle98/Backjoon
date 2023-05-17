@@ -12,10 +12,6 @@ int main(){
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-    // aM 일때 dp[a]+=dp[a-1]
-    // dp[k-1]이 정답
-    // M==0 이면 0 개수 (x)C(k-1)
-
     int T, test_case;
     ll sum=0, m, x, Answer;
     cin >> T;
@@ -36,7 +32,7 @@ int main(){
         m=s[n-1]/k;
         dp[0]=1;
         if(m==0){
-            // x C k-1
+            // n C r
             x=0;
 
         }
