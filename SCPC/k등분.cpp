@@ -7,9 +7,13 @@ const int N=500005;
 const ll MOD=1e9+7;
 ll dp[N],v[N],s[N];
 ll Fac[N],Inv[N];
-int n,k;
-
-ll comb(int n, int r){ return r > n ? 0 : Fac[n] * Inv[r] % MOD * Inv[n-r] % MOD; }
+ll n,k;
+ll Pow(ll a,ll b){
+    ll res=1;
+    for(;b;b/=2, a = a * a % MOD) if(b & 1) res = res * a % MOD;
+    return res;
+}
+ll Comb(int n, int r){ return r <= n ? Fac[n] * Inv[r] % MOD * Inv[n-r] % MOD : 0 ; }
 
 int main(){
     ios::sync_with_stdio(false);
@@ -21,46 +25,49 @@ int main(){
     
 
     int T, test_case;
-    ll sum=0, m, x, Answer;
+    ll m, x, Answer;
     cin >> T;
     Fac[0]=1;
     for(int i=1;i<N;i++){Fac[i]=Fac[i-1] * i % MOD;}
-    for(int i=0;i<N;i++){}
+    Inv[N-1]=Pow(Fac[N-1],MOD-2);
+    for(int i=N-2;i>=0;i--){Inv[i]=Inv[i+1]*(i+1)%MOD;}
+
 	for(test_case = 0; test_case  < T; test_case++)
 	{
+        memset(dp,0,sizeof(dp));
         cin >> n >> k;
-        sum=0;
-        cin >> v[0];
-        s[0]=v[0];
-        for(int i=1;i<n;i++){
+        for(int i=1;i<=n;i++){
             cin >> v[i];
             s[i]=s[i-1]+v[i];
         }
-        if(s[n-1]%k!=0){
+        if(s[n]%k!=0){
             cout << "Case #" << test_case+1 << endl << "0" << endl;
             continue;
-        }
-        m=s[n-1]/k;
+        }                                   
+        m=s[n]/k;
         dp[0]=1;
         if(m==0){
             // M==0 이면 0 개수 (x)C(k-1)
             
             x=0;
-            for(int i=0;i<n;i++){
+            for(int i=1;i<n;i++){
                 if(s[i]==0) x++;
-                Answer = comb(x,k-1);
+
+                Answer = Comb(x,k-1);
             }
         }
         else{
-            for(int i=0;i<n;i++){
-                if(s[i]%m==0 && s[i]/m>0){
+            // aM 이면 dp[a]+=dp[a-1];
+            for(int i=1;i<=n;i++){
+                if(s[i]%m) continue;
+                if(s[i]/m<=k && s[i]/m>=1){
                     x=s[i]/m;
-                    dp[x]+=dp[x-1];
+                    dp[x]= (dp[x] + dp[x-1]) % MOD;
                 }
             }
             Answer = dp[k-1];
         }
-        // aM 이면 dp[a]+=dp[a-1];
+        
         cout << "Case #" << test_case+1 << endl << Answer << endl;
 	}
     return 0;
