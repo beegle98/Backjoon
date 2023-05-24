@@ -28,47 +28,45 @@ int main(){
     ll m, x, Answer;
     cin >> T;
     Fac[0]=1;
-    for(int i=1;i<N;i++){Fac[i]=Fac[i-1] * i % MOD;}
+    for(int i=1;i<N;i++) Fac[i]=Fac[i-1] * i % MOD;
     Inv[N-1]=Pow(Fac[N-1],MOD-2);
-    for(int i=N-2;i>=0;i--){Inv[i]=Inv[i+1]*(i+1)%MOD;}
+    for(int i=N-2;i>=0;i--) Inv[i]=Inv[i+1] * (i+1) % MOD;
 
 	for(test_case = 0; test_case  < T; test_case++)
 	{
-        memset(dp,0,sizeof(dp));
+        
         cin >> n >> k;
         for(int i=1;i<=n;i++){
+            dp[i]=0;
             cin >> v[i];
             s[i]=s[i-1]+v[i];
         }
-        if(s[n]%k!=0){
-            cout << "Case #" << test_case+1 << endl << "0" << endl;
+        if(s[n]%k){
+            cout << "Case #" << test_case+1 << '\n' << "0\n";
             continue;
         }                                   
         m=s[n]/k;
         dp[0]=1;
         if(m==0){
-            // M==0 이면 0 개수 (x)C(k-1)
-            
-            x=0;
-            for(int i=1;i<n;i++){
-                if(s[i]==0) x++;
+            // M==0 이면 0 개수 x (x)C(k-1)
 
-                Answer = Comb(x,k-1);
-            }
+            x=0;
+            for(int i=1;i<n;i++) if(s[i]==0) x++;
+            Answer = Comb(x,k-1);
         }
         else{
-            // aM 이면 dp[a]+=dp[a-1];
+            // s[i]=aM 이면 dp[a]+=dp[a-1];
             for(int i=1;i<=n;i++){
                 if(s[i]%m) continue;
-                if(s[i]/m<=k && s[i]/m>=1){
-                    x=s[i]/m;
-                    dp[x]= (dp[x] + dp[x-1]) % MOD;
+                x=s[i]/m;
+                if(1<=x && x<=k){
+                    dp[x] = (dp[x] + dp[x-1]) % MOD;
                 }
             }
             Answer = dp[k-1];
         }
         
-        cout << "Case #" << test_case+1 << endl << Answer << endl;
+        cout << "Case #" << test_case+1 << '\n' << Answer << '\n';
 	}
     return 0;
 }
