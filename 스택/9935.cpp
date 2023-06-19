@@ -6,39 +6,46 @@ typedef long long ll;
 
 int n,k;
 
-stack<int> s;
+stack<pair<char,int>> s;
 string str,c;
 
 void solve(){
-    int cnt=0;
+    
     for(int i=0;i<n;i++){
-        if(str[cnt]==c[0]){
-            s.push(1);
-            if(s.top()==k){
-                str.erase(cnt-k+1,k);
+        if(str[i]==c[0]){
+            s.push({str[i],1});
+            if(s.top().second==k){
+                
                 for(int j=0;j<k;j++) s.pop();
-                cnt-=k;
+                
             }
         }
-        else if(!s.empty() && str[cnt]==c[s.top()]){
-            s.push(s.top()+1);
-            if(s.top()==k){
-                str.erase(cnt-k+1,k);
+        else if(!s.empty() && str[i]==c[s.top().second]){
+            s.push({str[i],s.top().second+1});
+            if(s.top().second==k){
+                
                 for(int j=0;j<k;j++) s.pop();
-                cnt-=k;
+                
             }
         }
         else{
-            while(!s.empty()){
-                s.pop();
-            }
+            s.push({str[i],0});
         }
-        cnt++;
     }
-    if(str.size()==0){
+    if(s.empty()){
         cout << "FRULA";
     }
-    else cout << str;
+    else{
+        vector<char> result;
+        int len=s.size();
+        for(int i=0;i<len;i++){
+            result.push_back(s.top().first);
+            s.pop();
+        }
+        for(int i=0;i<len;i++){
+            cout << result[len-i-1];
+        }
+    }
 }
 
 int main(){
