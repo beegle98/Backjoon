@@ -5,8 +5,8 @@ using namespace std;
 typedef long long ll;
 
 ll Cnt,Cost=0;
-int n,k,Max[2],input[111111];
-int l,r,r2,s[111111][2],s2[111111][2];
+ll n,k,Max[2],input[111111];
+ll l,r,r2,s[111111][2],s2[111111][2];
 
 
 void solve(){
@@ -24,7 +24,7 @@ void solve(){
     }
     l=0;
     r=-1;
-    int p=0;
+    ll p=0;
     
     for(int i=0;i<=Max[1];i++){//오름차순
         if(p<input[i]){
@@ -52,23 +52,25 @@ void solve(){
         s[r][1]=s2[i][1];
         
     }
-    int cur=0;
+    ll cur=0;
     Cnt=0;
     Cost=0;
     while(l<=r && cur<Max[0]){
-        Cnt++;
         if(s[l][0] < s[r][0]){
             Cost += (s[l][0]-cur) * (s[r][1] - s[l][1] + 1);
+            Cnt += s[l][0]-cur;
             cur=s[l][0];
             l++;
         }
         else if(s[l][0] > s[r][0]){
             Cost += (s[r][0]-cur) * (s[r][1] - s[l][1] + 1);
+            Cnt += s[r][0]-cur;
             cur=s[r][0];
             r--;
         }
         else{
             Cost += (s[l][0]-cur) * (s[r][1] - s[l][1] + 1);
+            Cnt += s[l][0]-cur;
             cur=s[l][0];
             l++;
             r--;
