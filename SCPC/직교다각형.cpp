@@ -4,33 +4,41 @@ using namespace std;
 
 typedef long long ll;
 
-multimap<int,int> mx,my;
-int n;
 ll sum;
 
 void solve(){
+
+    int n;
     cin >> n;
-    
+    map<int,int> mx,my;
+    vector<pair<int,int>> vx;
+
     for(int i=0;i<n;i++){
         int x,y;
         cin >> x >> y;
-        mx.insert({x,y});
-        my.insert({y,x});
+        vx.push_back({x,y});
+        mx[x]^=1;
+        my[y]^=1;
     }
-    
-    
-
-    int p=0,cnt;
-    for(auto i=mx.begin();i!=mx.end();advance(i,cnt)){
-        cnt=mx.count(i->first);
-
-        cout << "count : " << cnt << '\n';
-        
+    for(int i=0;i<n;i++){
+        if(mx[vx[i].first] && my[vx[i].second]){
+            n--;
+            vx.erase(vx.begin()+i);
+            break;
+        }
     }
+
+
     sum=0;
-
-    
-    cout << sum << '\n';
+    sort(vx.begin(),vx.end());
+    for(int i=0;i<n;i+=2){
+        sum += vx[i+1].second - vx[i].second;
+    }
+    for(pair<int,int> &p : vx) swap(p.first, p.second);
+    sort(vx.begin(),vx.end());
+    for(int i=0;i<n;i+=2){
+        sum += vx[i+1].second - vx[i].second;
+    }
 }
 
 int main()
@@ -44,8 +52,6 @@ int main()
 	cin >> T;
 	for(test_case = 0; test_case  < T; test_case++)
 	{
-        mx.clear();
-        my.clear();
         solve();
 		cout << "Case #" << test_case+1 << endl << sum << endl;
 	}
