@@ -11,8 +11,9 @@ int main(){
 	cin.tie(NULL);
 	cout.tie(NULL);
     
-    int n;
-
+    string s;
+    cin >> s;
+    cout << s << "??!";
     return 0;
 
 }
