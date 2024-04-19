@@ -14,16 +14,11 @@ int main()
     cout.tie(NULL);
     
     int a,b,c;
-
-    cin >> a >> b >>c;
-    if(a==b && b==c) cout << 10000+a*1000;
-    else if(a==b) cout << 1000+a*100;
-    else if(b==c) cout << 1000+b*100;
-    else if(c==a) cout << 1000+c*100;
-    else{
-        int MAX;
-        MAX=max(max(a,b),c);
-        cout << 100*MAX;
-    }
+    cin >> a >> b >> c;
+    int h,m,tmp;
+    m=(b+c)%60;
+    tmp=(b+c)/60;
+    h=(a+tmp)%24;
+    cout << h << ' ' << m <<'\n';
     return 0;
 }
